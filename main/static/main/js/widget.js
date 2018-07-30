@@ -1,23 +1,4 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'main/css/widget.css' %}" />
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'main/js/webcam.min.js' %}" />
-
-<!--<script src="{% static 'main/js/auth.js'"></script>
-<script src="{% static 'main/js/playlist_updates.js' %}"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
--->
-<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
-{% block content %}
-    
-
-
-    <div class="container blue lighten-3 valign-wrapper">
-        <div class="music">
-            <video id="video"></video>
-            <canvas id="canvas"></canvas><br>
-            <script type="text/javascript">
-                const video = document.getElementById('video');
+const video = document.getElementById('video');
                 const canvas = document.getElementById('canvas');
                 const context = canvas.getContext('2d');
                 const PICTURES_FOR_AI = [];
@@ -44,12 +25,3 @@
                     PICTURES_FOR_AI.push(context);
                     console.log(PICTURES_FOR_AI);
                 }
-                
-            </script>
-        </div>
-        <a class="waves-effect waves-light btn-large blue darken-4" onclick="snap();">Start</a>
-    </div>
-
-
-
-{% endblock %}
