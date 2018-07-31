@@ -1,55 +1,33 @@
+<!--  C S S  -->
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'main/css/widget.css' %}" />
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'main/js/webcam.min.js' %}" />
+<link rel="stylesheet" href="{% static 'main/css/widget.css' %}" />
 
-<!--<script src="{% static 'main/js/auth.js'"></script>
-<script src="{% static 'main/js/playlist_updates.js' %}"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
--->
-<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+<!--  M A I N   C O N T E N T  -->
 {% block content %}
     
 
-
+    
     <div class="container blue lighten-3 valign-wrapper">
         <div class="music">
             <video id="video"></video>
-            <canvas id="canvas"></canvas><br>
-            <script type="text/javascript">
-                const video = document.getElementById('video');
-                const canvas = document.getElementById('canvas');
-                const context = canvas.getContext('2d');
-                const PICTURES_FOR_AI = [];
-                const EMOTIONS = ['smiling', 'calm', 'crying'];
-                navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
-    
-                if(navigator.getUserMedia){
-                    navigator.getUserMedia({video:true}, streamWebCam, throwError);
-                }
-    
-                function streamWebCam (stream) {
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
-                }
-    
-                function throwError (e) {
-                    alert(e.name);
-                }
-    
-                function snap () {
-                    canvas.width = video.clientWidth;
-                    canvas.height = video.clientHeight;
-                    context.drawImage(video, 0, 0);
-                    PICTURES_FOR_AI.push(context);
-                    console.log(PICTURES_FOR_AI);
-                }
-                
-            </script>
+            <canvas id="canvas" style="display: none"></canvas><br>
+            <div class="emotions">Emotions!!</div>
+            <div class="controls">
+                <a class="waves-effect waves-light btn-large blue darken-4" onclick="snap();">Start</a>
+            </div>
         </div>
-        <a class="waves-effect waves-light btn-large blue darken-4" onclick="snap();">Start</a>
     </div>
-
+    
 
 
 {% endblock %}
+
+<!--  J A V A   S C R I P T  -->
+{% load static %}
+<script src="{% static 'main/js/widget.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/model_pca_20_svm_emotionDetection.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/emotion_classifier.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/emotionmodel.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/clmtrackr.js' %}" type="text/javascript"></script>
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+

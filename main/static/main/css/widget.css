@@ -1,6 +1,30 @@
+body{
+    background: red;
+}
+
 .container {
     height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.music {
+    display: grid;
+    border: 2px solid darkblue;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: 
+        "v v v c"
+        "v v v c"
+        "e e e e"
+    ;
+}
+.video {
+    grid-area: v;
+}
+.controls {
+    grid-area: c;
+}
+.emotions {
+    grid-area: e;
 }
