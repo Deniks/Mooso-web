@@ -27,8 +27,6 @@ function snap() {
     context.drawImage(video, 0, 0);
     PICTURES_FOR_AI.push(context);
     console.log(PICTURES_FOR_AI);
-    PICTURES_FOR_AI.toDataURL();
-    console.log(PICTURES_FOR_AI);
 }
 /*
 const ec = new emotionClassifier();
@@ -39,9 +37,11 @@ if (emotionData) {
     console.log(EMOTION_CONTAINER);
 }
 */
+const AZURE_IMAGE = canvas.toDataURL();
+
 function processImage() {
     // Replace <Subscription Key> with your valid subscription key.
-    var subscriptionKey = "b6bdafea837a423092313d2ef6f2c409";
+    var subscriptionKey = "b5099da494d349e88129fbdccb354982";
 
     // NOTE: You must use the same region in your REST call as you used to
     // obtain your subscription keys. For example, if you obtained your
@@ -58,34 +58,35 @@ function processImage() {
     var params = {
         "returnFaceId": "true",
         "returnFaceLandmarks": "false",
-        "returnFaceAttributes": "age,gender,headPose,smile,facialHair,glasses,emotion," +
+        "returnFaceAttributes":
+            "age,gender,headPose,smile,facialHair,glasses,emotion," +
             "hair,makeup,occlusion,accessories,blur,exposure,noise"
     };
 
     // Display the image.
-    var sourceImageUrl = document.getElementById("inputImage").value;
+    var sourceImageUrl = document.getElementById("inputImage").value = AZURE_IMAGE;
     document.querySelector("#sourceImage").src = sourceImageUrl;
 
     // Perform the REST API call.
     $.ajax({
-            url: uriBase + "?" + $.param(params),
+        url: uriBase + "?" + $.param(params),
 
-            // Request headers.
-            beforeSend: function (xhrObj) {
-                xhrObj.setRequestHeader("Content-Type", "application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-            },
+        // Request headers.
+        beforeSend: function(xhrObj){
+            xhrObj.setRequestHeader("Content-Type","application/json");
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+        },
 
-            type: "POST",
+        type: "POST",
 
-            // Request body.
-            data: '{"url": ' + '"' + sourceImageUrl + '"}',
-        })
+        // Request body.
+        data: '{"url": ' + '"' + sourceImageUrl + '"}',
+    })
 
-        .done(function (data) {
-            // Show formatted JSON on webpage.
-            $("#responseTextArea").val(JSON.stringify(data, null, 2));
-        })
+    .done(function(data) {
+        // Show formatted JSON on webpage.
+        $("#responseTextArea").val(JSON.stringify(data, null, 2));
+    })
 
         .fail(function (jqXHR, textStatus, errorThrown) {
             // Display error message.

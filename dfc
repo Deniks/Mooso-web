@@ -1,0 +1,23 @@
+[33mcommit 403a3f1e4d424ce51586e22daa9f5fab0b77744c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Deniks <rezanovich.denis@gmail.com>
+Date:   Wed Aug 1 23:28:36 2018 +0100
+
+    emotion recognizer with microsoft azure service
+
+[33mcommit 7ff7d7651daf5ac4ba81ce2bd1326372306049fd[m
+Author: Deniks <rezanovich.denis@gmail.com>
+Date:   Wed Aug 1 00:50:38 2018 +0100
+
+    Version using Emotion_detector project as instance
+
+[33mcommit 5a97122cd198bfc4c3cc5c4d11b89e83ff77ba0f[m
+Author: Deniks <rezanovich.denis@gmail.com>
+Date:   Mon Jul 30 23:45:07 2018 +0100
+
+    camera enabled
+
+[33mcommit dee1aea494ddc436d8dd4136386b9203c4761f79[m
+Author: Deniks <rezanovich.denis@gmail.com>
+Date:   Sun Jul 29 19:19:08 2018 +0100
+
+    basic
