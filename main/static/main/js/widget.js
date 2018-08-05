@@ -1,6 +1,7 @@
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
+const URL_EXAMPLE = 'https://cdn.vox-cdn.com/thumbor/VkpZk_WQSQvGe9T7YYOZscGsOwI=/0x86:706x557/1200x800/filters:focal(0x86:706x557)/cdn.vox-cdn.com/assets/738480/stevejobs.png';
 const PICTURES_FOR_AI = [];
 const EMOTIONS = ['smiling', 'calm', 'crying'];
 const EMOTION_CONTAINER = document.getElementsByClassName('emotions');
@@ -10,6 +11,11 @@ if (navigator.getUserMedia) {
     navigator.getUserMedia({
         video: true
     }, streamWebCam, throwError);
+}
+
+const getNestedObject = (nestedObj, pathArr) => {
+    return pathArr.reduce((obj, key) =>
+        (obj && obj[key] !== 'undefined') ? obj[key] : undefined, nestedObj);
 }
 
 function streamWebCam(stream) {
@@ -25,18 +31,8 @@ function snap() {
     canvas.width = video.clientWidth;
     canvas.height = video.clientHeight;
     context.drawImage(video, 0, 0);
-    PICTURES_FOR_AI.push(context);
-    console.log(PICTURES_FOR_AI);
 }
-/*
-const ec = new emotionClassifier();
-ec.init(emotionModel);
-const emotionData = ec.getBlank();
-if (emotionData) {
-    EMOTION_CONTAINER.value = emotionData;
-    console.log(EMOTION_CONTAINER);
-}
-*/
+
 const AZURE_IMAGE = canvas.toDataURL();
 
 function processImage() {
@@ -45,26 +41,24 @@ function processImage() {
 
     // NOTE: You must use the same region in your REST call as you used to
     // obtain your subscription keys. For example, if you obtained your
-    // subscription keys from westus, replace "westcentralus" in the URL
+    // subscription keys from westus, replace "westcentraluss" in the URL
     // below with "westus".
     //
     // Free trial subscription keys are generated in the westcentralus region.
     // If you use a free trial subscription key, you shouldn't need to change 
     // this region.
     var uriBase =
-        "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+        "https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect";
 
     // Request parameters.
     var params = {
-        "returnFaceId": "true",
+        "returnFaceId": "false",
         "returnFaceLandmarks": "false",
         "returnFaceAttributes":
-            "age,gender,headPose,smile,facialHair,glasses,emotion," +
-            "hair,makeup,occlusion,accessories,blur,exposure,noise"
+            "emotion" 
     };
-
     // Display the image.
-    var sourceImageUrl = document.getElementById("inputImage").value = AZURE_IMAGE;
+    var sourceImageUrl = document.getElementById("inputImage").value = URL_EXAMPLE;
     document.querySelector("#sourceImage").src = sourceImageUrl;
 
     // Perform the REST API call.
@@ -86,6 +80,20 @@ function processImage() {
     .done(function(data) {
         // Show formatted JSON on webpage.
         $("#responseTextArea").val(JSON.stringify(data, null, 2));
+        let domText = JSON.parse(document.getElementById('responseTextArea').value);
+        let emotions = domText[0].faceAttributes.emotion;
+        console.log(emotions);
+        for (const [key, value] of Object.entries(emotions)) {
+            if (value) {
+                console.log(`${key} - ${value}`);
+            }
+        }
+    /*    if ($("#responseTextArea")) {
+            let text = document.getElementById('responseTextArea').value
+            text = text[0];
+            getNestedObject(text, ['faceAttributes']);
+            console.log(text);
+        }*/
     })
 
         .fail(function (jqXHR, textStatus, errorThrown) {
@@ -99,6 +107,8 @@ function processImage() {
             alert(errorString);
         });
 };
+
+
 /*stats = new Stats();
 stats.domElement.style.position = 'absolute';
 stats.domElement.style.top = '0px';
