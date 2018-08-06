@@ -1,3 +1,22 @@
+
+
+const CONFIG = {
+    // F A C E  A P I
+    azureSubscribtionKey: 'b5099da494d349e88129fbdccb354982',
+    azureServerLocation: 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect', 
+    
+    // Y O U T U B E    A P I
+    key: 'AIzaSyB_WOhnBx75TDgd-EmVztrnRprPti84TYQ',
+    playlistId: 'PL7DkqoXVLGXYH3CbzzG2S4gagB3M93zFm',
+    url: 'https://www.googleapis.com/youtube/v3/playlistItems',
+    buildApiRequest: () => ('GET',
+                '/youtube/v3/channels',
+                {'id': 'UC_KuDw9D6IF_UNAmXiwHSuQ',
+                 'part': 'snippet,contentDetails,statistics'}),
+}
+
+
+
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
@@ -37,7 +56,7 @@ const AZURE_IMAGE = canvas.toDataURL();
 
 function processImage() {
     // Replace <Subscription Key> with your valid subscription key.
-    var subscriptionKey = "b5099da494d349e88129fbdccb354982";
+    var subscriptionKey = CONFIG.azureSubscribtionKey;
 
     // NOTE: You must use the same region in your REST call as you used to
     // obtain your subscription keys. For example, if you obtained your
@@ -47,8 +66,7 @@ function processImage() {
     // Free trial subscription keys are generated in the westcentralus region.
     // If you use a free trial subscription key, you shouldn't need to change 
     // this region.
-    var uriBase =
-        "https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect";
+    var uriBase = CONFIG.azureServerLocation;
 
     // Request parameters.
     var params = {
@@ -65,7 +83,7 @@ function processImage() {
     $.ajax({
         url: uriBase + "?" + $.param(params),
 
-        // Request headers.
+         // Request headers.
         beforeSend: function(xhrObj){
             xhrObj.setRequestHeader("Content-Type","application/json");
             xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
@@ -118,3 +136,55 @@ document.getElementById('container').appendChild(stats.domElement);
 document.addEventListener('clmtrackrIteration', function (event) {
     stats.update();
 }, false);*/
+//        Y O U T U B E       A P I
+const options = {
+    part: 'snippet',
+    key: CONFIG.key,
+    maxResults: 20,
+    playlistId: CONFIG.playlistId
+}
+
+const mainVid = id => {
+    $('#video').html(`
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    `);
+}
+
+const resultsLoop = data => {
+
+    $.each(data.items, (i, item) => {
+        
+        var thumb = item.snippet.thumbnails.high.url;
+        var title = item.snippet.title;
+        var desc = item.snippet.description.substring(0, 100);
+        var vid = item.snippet.resourceId.videoId;
+
+
+        $('main').append(`
+            <article class="item" data-key="${vid}">
+
+                <img src="${thumb}" alt="" class="thumb">
+                <div class="details">
+                    <h4>${title}</h4>
+                    <p>${desc}</p>
+                </div>
+
+            </article>
+        `);
+    });
+}
+
+const loadVids = () => {
+        $.getJSON(CONFIG.url, options, data => {
+        const id = data.items[0].snippet.resourceId.videoId;
+        mainVid(id);
+        resultsLoop(data);
+    });
+}
+
+loadVids();
+
+$('main').on('click', 'article', () => {
+    var id = $(this).attr('data-key');
+    mainVid(id);
+}); 

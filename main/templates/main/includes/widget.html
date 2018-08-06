@@ -1,5 +1,3 @@
-
-
 <!--  M A I N   C O N T E N T  -->
 {% block content %}
 
@@ -22,7 +20,7 @@
     <strong>Analyze face</strong> button.
     <br>
     <br> Image to analyze:
-    <input type="text" name="inputImage" id="inputImage" value=""/>
+    <input type="text" name="inputImage" id="inputImage" value="" />
 
     <button onclick="processImage()">Analyze face</button>
     <br>
@@ -43,6 +41,21 @@
 
             <img id="sourceImage" width="400" />
         </div>
+    </div>
+    <div class="container">
+
+        <header>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAAA51BMVEX+/vz////4JRwAAADAwMCXl5coKCh0dHXh4eDMzMxubm6cnJz4+PdaWlv5JBrFxcU2Njf+//r1AACoqKdKSkppaWg7OzvV1dS2trb5EQD5IBXr6+qLi4vtAAD27+7tnqDoEQ9hYWAQEBFOTk6ioqHp6edAQEAcHBz5GgyOjo366+zc3NvzXFv0VVUNDQ33MTHxiIvpQD/sNzjuzc3629jxZWjkenr1ra3mXVzok5X1kpjmaGf2fn7vnpv1ycjprbDyvbx+fn/x3drklJbtJyXkbm74tLX2Q0T1TE73dXXjXV8iIiP0V1chKTBEAAAIz0lEQVR4nO2diVraShSAM+zqCJadBHFHFisuqLXtRaDYa2/7/s9zZ80CWTgYUev5v342ZpvMzyxnZlJqGIgXEsxrP9rbA2UBQFkAUBYAlAUAZQEIlcV/yE37x/xx++dHILxkCUPqj9udW6HxUVQtJUtpMRx3+i+9/VFsAWW5K6eBskKqofRkuFsrXS0/BkvL8rZazl773A9AuCzPifaW/KFtYjX8OKUFAsoCgLIAoCwAKAsAygKAsgCgLAAoCwDKAoCyAKAsACgLAMoCgLIAoCwAKAsAygKAsgCgLAAoCwDKAoCyAKAsACgLAMoCgLIAoCwAKAsAygKAsgCgLAAoCwDKAoCyAKAsACgLAMoCgLIAoCwAKAsAygKAsgCgLAAoCwDKAoCyAKAsAPHLIob+59R/3QcQpyznMtrr9abT4fX19UhxPRxOe71WixifjFXv/+rEJouQ1vDn/cWvL5eD2f6uoOhB7tufDZ7OHi/uf163jJfXFfOnEpcsMr2dFYuNTsc0zTwn4Qc/wE7odBqN4uxx6iThSXHJ5KMfmDQnjCYF5QSS4mqyyHi/YSb8DfmTz3f2H+w0UgWO+j6EPt9OWRFJUnmNQ+pk/pHJaZKReWOyyKgDEaV97Y51Ijs8V0mZK3IkflnI+lyS/eQ89QVZGb57543Jal2ZcFeJhDlrqcLUFLndkN+CILbbUQ/+XmWRu8YqrhKJxg8la0PktiSCjpzYbkak/35lnXVWk2V+VrIs0bpUhKy6q5SFpPleZbUGK9VC1mrNespWRTTFQtaEbx5G5tAqccTJyUqdb+fegywyDIgUomXtXitZJZFpnl2Zw8qSoUNBXLfl/8RvUtaouJqrRKI41uGCyDQLHojlNF9LJJ0SZ6fJJ9+jb1HWzwBZ0eWtsaeSoW2ZaUOVlZz9HVShz2HL8j8qZFWpsfjtQqBmxnXR82V9DegMB40oXZ1blYxsqbaZrC07cGDPYNVqOftRnOeyt1yy/I4qWeyXfo26vqeJ0Fw/R8G+YpH13bczzO/3vhYjusnOoxYhcs2CbRmSTnhWrcmhULEpixnpVhjbFhfKtw76xCWLpA74PtYjkprY2iKOrLT4JCxdWksyBm4vdJ/rkPUrQFaL9B6LobF95z8tyxJiaoT+VoGD8uAKwLZ1BZV9p+sk1mapLsKpyJtaVpuW5V1kD0usHfu+B8ABcByybnwjByaL3X70pxgSV5hn9k2OZKgkWvpTi5CaO4Tiw0aXrM1AWVu2rKyWVT7Qd5GBbtl13y5sBByHrLNAWXwu8O4quOkyn3RXJduqiQxJedtVFbnJiPyKRnpVWVy++pvYMW9GKju0QEPgOGT9CZIl25rW10RQ02Ve2rJESTqSDX2JqAFQhVKnyoXJMkJkHRYsaSjJWzlRgstUXQlqtuKQRZ9CSpZIZPgtoC6aV/ocOZ/ym4q89PXQukacoeLKsgosM9tKjbod7wd2ZFFes6zWv6ElS6Qyeir61UW3LFGENngWMuw3UU1+864vKYucYawoK0PZVlcdVQftgrr99mSxdD7dzXzqYv7KESqqSvpcftxUdWR6Bi9phMsKabN4BK+OTohsGlmJNUhWp/DmZPGW/vviafmBI0uMc0TdSLHaci6aFr5fTQySZ8mS520S2SaKxktsZaImZF9FFqF7g8WK6JLl9F1JqseKQpbsFk/CZYVUQyFL9hfbRJYncRPRKp5CusM4ZNFAWU4yxvjJr403r1yyuspVmai+0S0r9zxZ8n5HRF3Kx1BC1vnaZUX1hqw7vPHvDl0NvP70ZYYXZPXjkFXWsgq5XC77KrKMz+GySO/CDAi0nDiLo2T1X0yWXbJs1i4rNIJn/eDeIHB86ETw/Ew1LiHG3ywrcGzIv656dFk0g4c7Z+4+oKRzCZcV1RsGyYpacYtfVvCsA5nehM7SmF/cslI6vy8u67iuWXecFTifRVsXERNanW+LstK+siJ6wyhZdujg9IbQlvlFZ0rz+/9ETpXaM6XzshbiLOt5bZbcd+CKs1Z4ayQWWQFrrPnIWeVE4z5A1smhLWupCD5Klpx2mLgj+H7zuJ6qrV3WM1Z3HvxlqbGhmMYSA5/ziPmsKFlb6jxyLDb42FD4q65d1nDFBWkm6zpAFhGrPaf2rAOfDjyw8xncZnXZ1pwsYVwWqLqeJ+OXCm1Ha5fVW31Fehoka6LMqKa+qacJeIaNqo+slJKqxjGOLBZKEZrUtzs5lwVQTXEtsZgbr6xnvOtw6V4c9ciSJaCdy1Xt8iTHjpmNlFpx8MpS7z6UNlQk5ZopPa635T57Jv+wYMmKebx+WfervkXj7gy9K6aqE1Tw2qKqF6e8syDLoIf24QOvLBuxwFbw7ILEpDHJ6iVWqof5/WmwLM/qTt9p9EU5qyzKUhWX0S14ZGXt5RwxtPHE8Eu+JRCnLBY8+E4aR7kq/vAk4l2LJwW9JsNqnvSnC0Vd1khPb2gQq63Lj/DM1w3FHTZOqvoycRea1fc9B66yxiOLxaVRa8+Lqszi7dxNcs10Ot0t6HVXWtosZzLlbJ3qPf1sO1NusvC71mUn8iBCXiJkEpo+ylSz7HLK9/E1iS1+msVuVGmXszV7TrbW3K7ulDdLoHWw+GQZZHxZbHRMNmReoojl82anUZw9zCcxnzDbpNS7g1L9v0gR73sNclscVW/aG85p6oArHerZsWZZBjGu927/DHZ3i/L994YP9vvws8ub+xEFP+xrE5ss+16t3nQ4Go3G4wfOnuCOb47HbPdw2mu9239iEaes6Fu+T0c2f2WmXgqUBQBlAUBZAFAWAJQFAGUBQFkAUBYAlAUAZQFAWQBQFgCUBQBlAUBZAFAWAJQFAGUBQFkAUBYAlAUAZQFAWQBQFgCUBQBlAUBZAFAWAJQFAGUBQFkAUBYAlAUAZQFAWQBQFgCUBQBlAUBZAFAWAJQFAGUBQFkAUBYAlAUAZQFAWQBQFgCUBQBlAUBZAFAWAJQFAGUBQFkAUBYAlAUAZQFAWQBQFoAQWf8Dz0TIB+19wcsAAAAASUVORK5CYII=" alt="" class="logo">
+        </header>
+
+        <section id="video">
+
+        </section>
+
+        <main>
+
+        </main>
+
     </div>
 </div>
 
