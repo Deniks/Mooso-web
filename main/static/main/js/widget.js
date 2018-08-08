@@ -7,7 +7,11 @@ const CONFIG = {
     
     // Y O U T U B E    A P I
     key: 'AIzaSyB_WOhnBx75TDgd-EmVztrnRprPti84TYQ',
-    playlistId: 'PL7DkqoXVLGXYH3CbzzG2S4gagB3M93zFm',
+    playlistLink: {
+        happy: 'PL7DkqoXVLGXbILlf-zgaEWyRSz0FWrXyY',
+        sad: 'PL7DkqoXVLGXZRoFkpIaFlDL_R0JgxqJsv',
+        neutral: 'PL7DkqoXVLGXZz2BB-hgR8JwEp0jOEFIYX',
+    },
     url: 'https://www.googleapis.com/youtube/v3/playlistItems',
     buildApiRequest: () => ('GET',
                 '/youtube/v3/channels',
@@ -20,7 +24,12 @@ const CONFIG = {
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
-const URL_EXAMPLE = 'https://cdn.vox-cdn.com/thumbor/VkpZk_WQSQvGe9T7YYOZscGsOwI=/0x86:706x557/1200x800/filters:focal(0x86:706x557)/cdn.vox-cdn.com/assets/738480/stevejobs.png';
+const URL_EXAMPLE = {
+    happy: 'https://cdn.tinybuddha.com/wp-content/uploads/2009/10/Happy1.png',
+    neutral: 'https://cdn.vox-cdn.com/thumbor/VkpZk_WQSQvGe9T7YYOZscGsOwI=/0x86:706x557/1200x800/filters:focal(0x86:706x557)/cdn.vox-cdn.com/assets/738480/stevejobs.png',
+    sadness: 'https://cdn-img.health.com/sites/default/files/styles/large_16_9/public/styles/main/public/gettyimages-471914697.jpg?itok=2RvWMJYg',
+    selfie: canvas.value, // This will work only with running hosting
+};
 const PICTURES_FOR_AI = [];
 const EMOTIONS = ['smiling', 'calm', 'crying'];
 const EMOTION_CONTAINER = document.getElementsByClassName('emotions');
@@ -50,11 +59,10 @@ function snap() {
     canvas.width = video.clientWidth;
     canvas.height = video.clientHeight;
     context.drawImage(video, 0, 0);
-}
 
-const AZURE_IMAGE = canvas.toDataURL();
 
-function processImage() {
+    const AZURE_IMAGE = canvas.toDataURL();
+
     // Replace <Subscription Key> with your valid subscription key.
     var subscriptionKey = CONFIG.azureSubscribtionKey;
 
@@ -76,7 +84,7 @@ function processImage() {
             "emotion" 
     };
     // Display the image.
-    var sourceImageUrl = document.getElementById("inputImage").value = URL_EXAMPLE;
+    var sourceImageUrl = document.getElementById("inputImage").value = URL_EXAMPLE.neutral;
     document.querySelector("#sourceImage").src = sourceImageUrl;
 
     // Perform the REST API call.
@@ -101,11 +109,20 @@ function processImage() {
         let domText = JSON.parse(document.getElementById('responseTextArea').value);
         let emotions = domText[0].faceAttributes.emotion;
         console.log(emotions);
-        for (const [key, value] of Object.entries(emotions)) {
-            if (value) {
-                console.log(`${key} - ${value}`);
+        window.Character = '';
+
+        window.EMOTION_LOGGER = () => {
+            for (const [key, value] of Object.entries(emotions)) {
+                const VALUE = Math.round(value);
+                if (VALUE === 1) {
+                    Character = key;
+                    console.log(`${key}`);
+                }
             }
-        }
+        };
+
+
+        EMOTION_LOGGER();
     /*    if ($("#responseTextArea")) {
             let text = document.getElementById('responseTextArea').value
             text = text[0];
@@ -141,7 +158,7 @@ const options = {
     part: 'snippet',
     key: CONFIG.key,
     maxResults: 20,
-    playlistId: CONFIG.playlistId
+    playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happy : window.Character === 'neutral'  ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sad : console.log('none of theese'),
 }
 
 const mainVid = id => {
@@ -153,7 +170,7 @@ const mainVid = id => {
 const resultsLoop = data => {
 
     $.each(data.items, (i, item) => {
-        
+
         var thumb = item.snippet.thumbnails.high.url;
         var title = item.snippet.title;
         var desc = item.snippet.description.substring(0, 100);
@@ -187,4 +204,5 @@ loadVids();
 $('main').on('click', 'article', () => {
     var id = $(this).attr('data-key');
     mainVid(id);
-}); 
+});
+

@@ -6,13 +6,15 @@
 }
 
 .music {
+	display: none;
+	/*
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-areas: 
         "v v v c"
         "v v v c"
         "e e e e"
-    ;
+    ;*/
 }
 .video {
     grid-area: v;
@@ -54,7 +56,6 @@ body {
 
 header,
 section {
-	position: fixed;
 	text-align: center;
 	width: 560px;
 	background-color: #fff;
