@@ -8,8 +8,8 @@ const CONFIG = {
     // Y O U T U B E    A P I
     key: 'AIzaSyB_WOhnBx75TDgd-EmVztrnRprPti84TYQ',
     playlistLink: {
-        happy: 'PL7DkqoXVLGXbILlf-zgaEWyRSz0FWrXyY',
-        sad: 'PL7DkqoXVLGXZRoFkpIaFlDL_R0JgxqJsv',
+        happiness: 'PL7DkqoXVLGXbILlf-zgaEWyRSz0FWrXyY',
+        sadness: 'PL7DkqoXVLGXZRoFkpIaFlDL_R0JgxqJsv',
         neutral: 'PL7DkqoXVLGXZz2BB-hgR8JwEp0jOEFIYX',
     },
     url: 'https://www.googleapis.com/youtube/v3/playlistItems',
@@ -25,7 +25,7 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const URL_EXAMPLE = {
-    happy: 'https://cdn.tinybuddha.com/wp-content/uploads/2009/10/Happy1.png',
+    happiness: 'https://cdn.tinybuddha.com/wp-content/uploads/2009/10/Happy1.png',
     neutral: 'https://cdn.vox-cdn.com/thumbor/VkpZk_WQSQvGe9T7YYOZscGsOwI=/0x86:706x557/1200x800/filters:focal(0x86:706x557)/cdn.vox-cdn.com/assets/738480/stevejobs.png',
     sadness: 'https://cdn-img.health.com/sites/default/files/styles/large_16_9/public/styles/main/public/gettyimages-471914697.jpg?itok=2RvWMJYg',
     selfie: canvas.value, // This will work only with running hosting
@@ -101,6 +101,7 @@ function snap() {
 
         // Request body.
         data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        success: getSong(),
     })
 
     .done(function(data) {
@@ -121,14 +122,8 @@ function snap() {
             }
         };
 
-
         EMOTION_LOGGER();
-    /*    if ($("#responseTextArea")) {
-            let text = document.getElementById('responseTextArea').value
-            text = text[0];
-            getNestedObject(text, ['faceAttributes']);
-            console.log(text);
-        }*/
+        
     })
 
         .fail(function (jqXHR, textStatus, errorThrown) {
@@ -144,65 +139,63 @@ function snap() {
 };
 
 
-/*stats = new Stats();
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.top = '0px';
-document.getElementById('container').appendChild(stats.domElement);
-
-// update stats on every iteration
-document.addEventListener('clmtrackrIteration', function (event) {
-    stats.update();
-}, false);*/
 //        Y O U T U B E       A P I
-const options = {
-    part: 'snippet',
-    key: CONFIG.key,
-    maxResults: 20,
-    playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happy : window.Character === 'neutral'  ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sad : console.log('none of theese'),
-}
+function getSong() {
+    const options = {
+        part: 'snippet',
+        key: CONFIG.key,
+        maxResults: 20,
+        playlistId: 
+            window.Character === 'happiness' ?  CONFIG.playlistLink.happiness : 
+            window.Character === 'neutral'  ? CONFIG.playlistLink.neutral : 
+            window.Character === 'sadness' ? CONFIG.playlistLink.sadness : 
+            false,
+    }
 
-const mainVid = id => {
-    $('#video').html(`
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    `);
-}
-
-const resultsLoop = data => {
-
-    $.each(data.items, (i, item) => {
-
-        var thumb = item.snippet.thumbnails.high.url;
-        var title = item.snippet.title;
-        var desc = item.snippet.description.substring(0, 100);
-        var vid = item.snippet.resourceId.videoId;
-
-
-        $('main').append(`
-            <article class="item" data-key="${vid}">
-
-                <img src="${thumb}" alt="" class="thumb">
-                <div class="details">
-                    <h4>${title}</h4>
-                    <p>${desc}</p>
-                </div>
-
-            </article>
+    const mainVid = id => {
+        $('#youtube-api-result').html(`
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         `);
-    });
-}
+    }
 
-const loadVids = () => {
-        $.getJSON(CONFIG.url, options, data => {
-        const id = data.items[0].snippet.resourceId.videoId;
+    const resultsLoop = data => {
+
+        $.each(data.items, (i, item) => {
+
+            var thumb = item.snippet.thumbnails.medium.url;
+            var title = item.snippet.title;
+            var desc = item.snippet.description.substring(0, 100);
+            var vid = item.snippet.resourceId.videoId;
+
+
+            $('#youtube-playlist').append(`
+                <article class="item" data-key="${vid}">
+
+                    <img src="${thumb}" alt="" class="thumb">
+                    <div class="details">
+                        <h4>${title}</h4>
+                        <p>${desc}</p>
+                    </div>
+
+                </article>
+            `);
+        });
+    }
+
+    const loadVids = () => {
+            $.getJSON(CONFIG.url, options, data => {
+            const WHOLE_PLAYLIST = data.items
+            const id = data.items[Math.floor(Math.random() * WHOLE_PLAYLIST.length)].snippet.resourceId.videoId;
+            mainVid(id);
+            resultsLoop(data);
+        });
+    }
+
+    loadVids();
+
+    $('main').on('click', 'article', () => {
+        var id = $(this).attr('data-key');
         mainVid(id);
-        resultsLoop(data);
     });
+
 }
-
-loadVids();
-
-$('main').on('click', 'article', () => {
-    var id = $(this).attr('data-key');
-    mainVid(id);
-});
-
