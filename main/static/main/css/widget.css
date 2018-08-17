@@ -2,6 +2,8 @@
 	--mainColor: #323233;
 	--secondaryColor: #fff;
 	--thirdColor: #2962ff;
+	--windowHeight: 100vh;
+	--windowWidth: 100vw;
 }
 html {
 	font-size: 16px;
@@ -39,4 +41,49 @@ main {
 	display: flex;
 	flex-direction: row;
 	padding: 10px;
+}
+#youtube-api-result iframe{
+	box-sizing: border-box;
+}
+/* 		MEDIA QUERIES			*/
+
+@media only screen and (max-width: 640px) {
+	html {
+		font-size: 13px;
+	}
+	.widget {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		grid-template-areas: 
+				'm m m'
+				'c c c'
+		;
+	}
+	main {
+		flex-direction: column;
+	}
+	#youtube-playlist {
+		display: none;
+	}
+	.window {
+		overflow-y: visible;
+		overflow-x: hidden;
+		width: 100vw;
+	}
+	.widget {
+	/*	width: calc(var(--windowHeight) * 0.9);*/
+		height: var(--windowHeight);
+		width: var(--windowWidth);
+		background-color:rgb(5, 71, 71);
+	}
+	#video, #canvas {
+		display: none;
+	}
+	.controls {
+		text-align: center;
+	}
+	.emotions {
+		display: none;
+	}
 }

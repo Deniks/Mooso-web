@@ -154,7 +154,7 @@ function getSong() {
 
     const mainVid = id => {
         $('#youtube-api-result').html(`
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         `);
     }
 
@@ -183,7 +183,7 @@ function getSong() {
     }
 
     const loadVids = () => {
-            $.getJSON(CONFIG.url, options, data => {
+         $.getJSON(CONFIG.url, options, data => {
             const WHOLE_PLAYLIST = data.items
             const id = data.items[Math.floor(Math.random() * WHOLE_PLAYLIST.length)].snippet.resourceId.videoId;
             mainVid(id);
@@ -194,8 +194,31 @@ function getSong() {
     loadVids();
 
     $('main').on('click', 'article', () => {
-        var id = $(this).attr('data-key');
+        const id = $(this).attr('data-key');
         mainVid(id);
     });
+//  EXPERIMENT ! ! !
+    const initialize = () => {
+        updateTimerDisplay();
+        updateProgressBar();
 
+        clearInterval(time_update_interval);
+        time_update_interval = setInterval(function () {
+            updateTimerDisplay();
+            updateProgressBar();
+        }, 1000)
+    }
+
+    const onYoutubeIframeAPIReady = () => {
+        let player = new YT.Player('youtube-api-result', {
+            playerVars: {
+                color:  'white',
+                playlist:  options.playlistId
+            },
+            events: {
+                onReady: initialize
+            }
+        });
+    }
+    
 }
