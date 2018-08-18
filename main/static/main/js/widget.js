@@ -1,10 +1,8 @@
-
-
 const CONFIG = {
     // F A C E  A P I
     azureSubscribtionKey: 'b5099da494d349e88129fbdccb354982',
-    azureServerLocation: 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect', 
-    
+    azureServerLocation: 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect',
+
     // Y O U T U B E    A P I
     key: 'AIzaSyB_WOhnBx75TDgd-EmVztrnRprPti84TYQ',
     playlistLink: {
@@ -14,9 +12,10 @@ const CONFIG = {
     },
     url: 'https://www.googleapis.com/youtube/v3/playlistItems',
     buildApiRequest: () => ('GET',
-                '/youtube/v3/channels',
-                {'id': 'UC_KuDw9D6IF_UNAmXiwHSuQ',
-                 'part': 'snippet,contentDetails,statistics'}),
+        '/youtube/v3/channels', {
+            'id': 'UC_KuDw9D6IF_UNAmXiwHSuQ',
+            'part': 'snippet,contentDetails,statistics'
+        }),
 }
 
 
@@ -80,8 +79,7 @@ function snap() {
     var params = {
         "returnFaceId": "false",
         "returnFaceLandmarks": "false",
-        "returnFaceAttributes":
-            "emotion" 
+        "returnFaceAttributes": "emotion"
     };
     // Display the image.
     var sourceImageUrl = document.getElementById("inputImage").value = URL_EXAMPLE.neutral;
@@ -89,42 +87,42 @@ function snap() {
 
     // Perform the REST API call.
     $.ajax({
-        url: uriBase + "?" + $.param(params),
+            url: uriBase + "?" + $.param(params),
 
-         // Request headers.
-        beforeSend: function(xhrObj){
-            xhrObj.setRequestHeader("Content-Type","application/json");
-            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-        },
+            // Request headers.
+            beforeSend: function (xhrObj) {
+                xhrObj.setRequestHeader("Content-Type", "application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
 
-        type: "POST",
+            type: "POST",
 
-        // Request body.
-        data: '{"url": ' + '"' + sourceImageUrl + '"}',
-        success: getSong(),
-    })
+            // Request body.
+            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+            success: getSong(),
+        })
 
-    .done(function(data) {
-        // Show formatted JSON on webpage.
-        $("#responseTextArea").val(JSON.stringify(data, null, 2));
-        let domText = JSON.parse(document.getElementById('responseTextArea').value);
-        let emotions = domText[0].faceAttributes.emotion;
-        console.log(emotions);
-        window.Character = '';
+        .done(function (data) {
+            // Show formatted JSON on webpage.
+            $("#responseTextArea").val(JSON.stringify(data, null, 2));
+            let domText = JSON.parse(document.getElementById('responseTextArea').value);
+            let emotions = domText[0].faceAttributes.emotion;
+            console.log(emotions);
+            window.Character = '';
 
-        window.EMOTION_LOGGER = () => {
-            for (const [key, value] of Object.entries(emotions)) {
-                const VALUE = Math.round(value);
-                if (VALUE === 1) {
-                    Character = key;
-                    console.log(`${key}`);
+            window.EMOTION_LOGGER = () => {
+                for (const [key, value] of Object.entries(emotions)) {
+                    const VALUE = Math.round(value);
+                    if (VALUE === 1) {
+                        Character = key;
+                        console.log(`${key}`);
+                    }
                 }
-            }
-        };
+            };
 
-        EMOTION_LOGGER();
-        
-    })
+            EMOTION_LOGGER();
+
+        })
 
         .fail(function (jqXHR, textStatus, errorThrown) {
             // Display error message.
@@ -145,16 +143,12 @@ function getSong() {
         part: 'snippet',
         key: CONFIG.key,
         maxResults: 20,
-        playlistId: 
-            window.Character === 'happiness' ?  CONFIG.playlistLink.happiness : 
-            window.Character === 'neutral'  ? CONFIG.playlistLink.neutral : 
-            window.Character === 'sadness' ? CONFIG.playlistLink.sadness : 
-            false,
+        playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happiness : window.Character === 'neutral' ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sadness : false,
     }
 
     const mainVid = id => {
         $('#youtube-api-result').html(`
-            <iframe src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe id="ytplayer" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         `);
     }
 
@@ -183,7 +177,7 @@ function getSong() {
     }
 
     const loadVids = () => {
-         $.getJSON(CONFIG.url, options, data => {
+        $.getJSON(CONFIG.url, options, data => {
             const WHOLE_PLAYLIST = data.items
             const id = data.items[Math.floor(Math.random() * WHOLE_PLAYLIST.length)].snippet.resourceId.videoId;
             mainVid(id);
@@ -197,28 +191,4 @@ function getSong() {
         const id = $(this).attr('data-key');
         mainVid(id);
     });
-//  EXPERIMENT ! ! !
-    const initialize = () => {
-        updateTimerDisplay();
-        updateProgressBar();
-
-        clearInterval(time_update_interval);
-        time_update_interval = setInterval(function () {
-            updateTimerDisplay();
-            updateProgressBar();
-        }, 1000)
-    }
-
-    const onYoutubeIframeAPIReady = () => {
-        let player = new YT.Player('youtube-api-result', {
-            playerVars: {
-                color:  'white',
-                playlist:  options.playlistId
-            },
-            events: {
-                onReady: initialize
-            }
-        });
-    }
-    
 }

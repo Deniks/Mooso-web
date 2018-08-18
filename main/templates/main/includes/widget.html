@@ -11,7 +11,7 @@
 <!--            C A M E R A                    -->        
         <div class="camera">
             <video id="video" muted="muted"></video>
-            <canvas id="canvas" ></canvas>
+            <canvas id="canvas" style="display: none;"></canvas>
             <br>
 
             <div class="controls">
@@ -43,8 +43,8 @@
         </div>
 <!--    S U G G E S T E D   M U S I C        -->
             <div class="music">
-    
-    
+                
+                <div class="playerContainer"></div>
                 <section id="youtube-api-result">
                 </section>
     
@@ -62,5 +62,6 @@
 <!--  J A V A   S C R I P T  -->
 {% load static %}
 <script src="{% static 'main/js/widget.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/audioPlayer.js' %}" type="text/javascript"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
