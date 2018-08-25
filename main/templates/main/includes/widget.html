@@ -1,24 +1,68 @@
 <!--  C S S  -->
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'main/css/widget.css' %}" />
+<link rel="stylesheet" href="{% static 'main/css/audioPlayer.css' %}" />
 <link rel="stylesheet" href="{% static 'main/css/normalize.css' %}" />
+<script src="{% static 'main/js/app_settings.js' %}"></script>
 <!--  M A I N   C O N T E N T  -->
 {% block content %}
 
 
 <div class="window">
+
+    <div class="settings">
+        <div class="row">
+            <div class="col s12 valign-wrapper">
+                <ul class="tabs">
+                    <li class="tab col s3">
+                        <a href="/" >
+                            <i class="material-icons">
+                                home
+                            </i>
+                        </a>
+                    </li>
+                    <li class="tab col s3">
+                        <a onclick="viewPage();">
+                            <i class="material-icons">
+                                fullscreen
+                            </i>
+                        </a>
+                    </li>
+                    <li class="tab col s3" id="sound" onclick="on();">
+                        <a href="#test3">
+                            <i class="material-icons">
+                                music_note
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="tab col s3">
+                        <a href="#test4">
+                            <i class="material-icons">
+                                exit_to_app
+                            </i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+
     <div class="widget">
-<!--            C A M E R A                    -->        
+        <!--            C A M E R A                    -->
         <div class="camera">
             <video id="video" muted="muted"></video>
-            <canvas id="canvas" style="display: none;"></canvas>
+            <canvas id="canvas"></canvas>
             <br>
 
             <div class="controls">
                 <a class="waves-effect waves-light btn-large blue darken-4" onclick="snap();">Start</a>
             </div>
-        </div>  
-<!-- E M O T I O N     R E C O G N I Z E R     -->
+        </div>
+        <!-- E M O T I O N     R E C O G N I Z E R     -->
         <div class="emotions">
 
             <br> Image to analyze:
@@ -29,30 +73,31 @@
                     Response:
                     <br>
                     <br>
-    
+
                     <textarea id="responseTextArea" class="UIInput" style="width:580px; height:400px;"></textarea>
                 </div>
                 <div id="imageDiv" style="width:420px; display:table-cell;">
                     Source image:
                     <br>
                     <br>
-    
+
                     <img id="sourceImage" width="400" />
                 </div>
             </div>
         </div>
-<!--    S U G G E S T E D   M U S I C        -->
-            <div class="music">
-                
-                <div class="playerContainer"></div>
-                <section id="youtube-api-result">
-                </section>
-    
-                <main id="youtube-playlist">
-    
-                </main>
-    
-            </div>
+        <!--    S U G G E S T E D   M U S I C        -->
+        <div class="music">
+
+            <section id="youtube-api-result">
+            </section>
+
+            <main id="youtube-playlist">
+
+            </main>
+
+        </div>
+
+
     </div>
 </div>
 

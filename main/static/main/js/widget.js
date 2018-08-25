@@ -1,3 +1,4 @@
+
 const CONFIG = {
     // F A C E  A P I
     azureSubscribtionKey: 'b5099da494d349e88129fbdccb354982',
@@ -55,6 +56,8 @@ function throwError(e) {
 }
 
 function snap() {
+
+
     canvas.width = video.clientWidth;
     canvas.height = video.clientHeight;
     context.drawImage(video, 0, 0);
@@ -148,7 +151,7 @@ function getSong() {
 
     const mainVid = id => {
         $('#youtube-api-result').html(`
-            <iframe id="ytplayer" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe id="ytplayer" src="https://www.youtube-nocookie.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         `);
     }
 
@@ -191,4 +194,9 @@ function getSong() {
         const id = $(this).attr('data-key');
         mainVid(id);
     });
+    /*
+    const el = document.getElementById('youtube-api-result');
+    const content = el.contentWindow.document.body.innerHTML;
+    console.log(content);*/
+
 }

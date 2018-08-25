@@ -16,7 +16,6 @@ html {
 	width: 100%;
 	overflow-y: hidden;
 	background: var(--mainColor);
-	padding: 5%;
 	display: flex;
 	align-items: center;
 }
@@ -25,7 +24,7 @@ html {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(2, 1fr);
-	grid-template-areas: 'c m e' 'c m e';
+	grid-template-areas: 'c a m e' 'c a m e';
 }
 
 .camera {
@@ -38,6 +37,10 @@ html {
 
 .music {
 	grid-area: m;
+}
+
+#audio-player {
+	grid-area: a;
 }
 
 main {
@@ -72,10 +75,15 @@ main {
 		font-size: 13px;
 	}
 	.widget {
+		height: calc(var(--windowHeight) - 8%);
+		position: absolute;
+		top: 0;
+		width: var(--windowWidth);
+		background-color: rgb(5, 71, 71);
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: repeat(2, 1fr);
-		grid-template-areas: 'm m m' 'c c c';
+		grid-template-rows: repeat(3, 1fr);
+		grid-template-areas: 'm m m' 'a a a' 'c c c';
 	}
 	main {
 		flex-direction: column;
@@ -88,11 +96,19 @@ main {
 		overflow-x: hidden;
 		width: 100vw;
 	}
-	.widget {
-		/*	width: calc(var(--windowHeight) * 0.9);*/
-		height: var(--windowHeight);
+	.settings {
+		position: absolute;
+		bottom: 0;
 		width: var(--windowWidth);
-		background-color: rgb(5, 71, 71);
+	}
+	.row {
+		margin-bottom: 0;
+	}
+	.tabs {
+		background: none;
+	}
+	.tabs .tab a {
+		color: var(--secondaryColor);
 	}
 	#video,
 	#canvas {
