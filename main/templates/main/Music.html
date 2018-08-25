@@ -1,5 +1,22 @@
-{% extends "main/wrapper.html" %}
+{% extends "main/wrapper.html" %} 
+
+<!--  C S S  -->
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'main/css/widget.css' %}" />
+<link rel="stylesheet" href="{% static 'main/css/audioPlayer.css' %}" />
+<link rel="stylesheet" href="{% static 'main/css/normalize.css' %}" />
 
 {% block content %}
-    {% include "main/includes/widget.html" %}
+    <div class="window">
+        {% include "main/includes/ui.html" %}
+        {% include "main/includes/widget.html" %}
+    </div>
 {% endblock %}
+
+
+<!--  J A V A   S C R I P T  -->
+{% load static %}
+<script src="{% static 'main/js/widget.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/audioPlayer.js' %}" type="text/javascript"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>

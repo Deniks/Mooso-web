@@ -1,0 +1,16 @@
+@media only screen and (max-width: 640px) {
+    .settings {
+        position: absolute;
+        bottom: 0;
+        width: var(--windowWidth);
+    }
+    .row {
+        margin-bottom: 0;
+    }
+    .tabs {
+        background: none;
+    }
+    .tabs .tab a {
+        color: var(--secondaryColor);
+    }
+}

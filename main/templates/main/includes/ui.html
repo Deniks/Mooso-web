@@ -1,0 +1,52 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'main/css/ui.css' %}" />
+
+<script src="{% static 'main/js/ui.js' %}"></script>
+
+
+{% block content %}
+<div class="settings">
+    <div class="row">
+        <div class="col s12 valign-wrapper">
+            <ul class="tabs">
+                <li class="tab col s3">
+                    <a href="/">
+                        <i class="material-icons">
+                            home
+                        </i>
+                        home
+                    </a>
+                </li>
+                <li class="tab col s3">
+                    <a onclick="viewPage();">
+                        <i class="material-icons">
+                            fullscreen
+                        </i>
+                        zoom
+                    </a>
+                </li>
+                <li class="tab col s3" id="sound" onclick="on();">
+                    <a href="#test3">
+                        <i class="material-icons">
+                            music_note
+                        </i>
+                        audio
+                    </a>
+                </li>
+
+                <li class="tab col s3">
+                    <a href="#test4">
+                        <i class="material-icons">
+                            exit_to_app
+                        </i>
+                        exit
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
