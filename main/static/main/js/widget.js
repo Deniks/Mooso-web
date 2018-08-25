@@ -64,7 +64,20 @@ function snap() {
 
 
     const AZURE_IMAGE = canvas.toDataURL();
-
+    /*
+    $.ajax({
+        type: "POST",
+        url: "script.php",
+        data: { 
+           imgBase64: AZURE_IMAGE
+        }
+      }).done(function(o) {
+        console.log('saved'); 
+        // If you want the file to be visible in the browser 
+        // - please modify the callback in javascript. All you
+        // need is to return the url to the file, you just saved 
+        // and than put the image in your browser.
+      });*/
     // Replace <Subscription Key> with your valid subscription key.
     var subscriptionKey = CONFIG.azureSubscribtionKey;
 

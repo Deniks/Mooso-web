@@ -12,5 +12,11 @@
     }
     .tabs .tab a {
         color: var(--secondaryColor);
+        font-size: 10px;
+        
+    }
+    .material-icons {
+        display: inline-flex;
+        vertical-align: top;
     }
 }
