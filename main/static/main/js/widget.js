@@ -62,7 +62,7 @@ function snap() {
     context.drawImage(video, 0, 0);
     const FORMAT = 'png';
     let azureImage = canvas.toDataURL('image/' + FORMAT);
-  /*
+    /*
     let data = azureImage.split(',')[1];
     const mimeType = azureImage.split(';')[0].slice(5);
     let bytes = window.atob(data);
@@ -108,59 +108,55 @@ function snap() {
         "returnFaceAttributes": "emotion"
     };
     // Display the image.
-    var sourceImageUrl = document.getElementById("inputImage").value = URL_EXAMPLE.neutral;
+    var sourceImageUrl = document.getElementById("inputImage").value = azureImage;
     document.querySelector("#sourceImage").src = sourceImageUrl;
 
     // Perform the REST API call.
+    fetch(azureImage)
+        .then(res => res.blob())
+        .then(blobData => {
+            $.post({
+                    url: uriBase + "?" + $.param(params),
+                    contentType: 'application/octet-stream',
+                    headers: {
+                        'Ocp-Apim-Subscription-Key': subscriptionKey,
+                    },
+                    processData: false,
+                    data: blobData
+                })
+                .done(data => {
+                    // Show formatted JSON on webpage.
+                    $("#responseTextArea").val(JSON.stringify(data, null, 2));
+                    let domText = JSON.parse(document.getElementById('responseTextArea').value);
+                    let emotions = domText[0].faceAttributes.emotion;
+                    console.log(emotions);
+                    window.Character = '';
 
-    $.ajax({
-            url: uriBase + "?" + $.param(params),
+                    window.EMOTION_LOGGER = () => {
+                        for (const [key, value] of Object.entries(emotions)) {
+                            const VALUE = Math.round(value);
+                            if (VALUE === 1) {
+                                Character = key;
+                                console.log(`${key}`);
+                            }
+                        }
+                    };
 
-            // Request headers.
-            beforeSend: function (xhrObj) {
-                xhrObj.setRequestHeader("Content-Type", "application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-            },
+                    EMOTION_LOGGER();
 
-            type: "POST",
-
-            // Request body.
-            data: /*'{"url": ' + '"' + */ sourceImageUrl /* + '"}'*/ ,
-            success: getSong(),
-        })
-
-        .done(function (data) {
-            // Show formatted JSON on webpage.
-            $("#responseTextArea").val(JSON.stringify(data, null, 2));
-            let domText = JSON.parse(document.getElementById('responseTextArea').value);
-            let emotions = domText[0].faceAttributes.emotion;
-            console.log(emotions);
-            window.Character = '';
-
-            window.EMOTION_LOGGER = () => {
-                for (const [key, value] of Object.entries(emotions)) {
-                    const VALUE = Math.round(value);
-                    if (VALUE === 1) {
-                        Character = key;
-                        console.log(`${key}`);
-                    }
-                }
-            };
-
-            EMOTION_LOGGER();
-
-        })
-
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            // Display error message.
-            var errorString = (errorThrown === "") ?
-                "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-            errorString += (jqXHR.responseText === "") ?
-                "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
-                jQuery.parseJSON(jqXHR.responseText).message :
-                jQuery.parseJSON(jqXHR.responseText).error.message;
-            alert(errorString);
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    // Display error message.
+                    var errorString = (errorThrown === "") ?
+                        "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+                    errorString += (jqXHR.responseText === "") ?
+                        "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                        jQuery.parseJSON(jqXHR.responseText).message :
+                        jQuery.parseJSON(jqXHR.responseText).error.message;
+                    alert(errorString);
+                });
         });
+    
 };
 
 //        Y O U T U B E       A P I
