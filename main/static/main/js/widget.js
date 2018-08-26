@@ -1,4 +1,3 @@
-
 const CONFIG = {
     // F A C E  A P I
     azureSubscribtionKey: 'b5099da494d349e88129fbdccb354982',
@@ -61,9 +60,20 @@ function snap() {
     canvas.width = video.clientWidth;
     canvas.height = video.clientHeight;
     context.drawImage(video, 0, 0);
+    const FORMAT = 'png';
+    let azureImage = canvas.toDataURL('image/' + FORMAT);
+  /*
+    let data = azureImage.split(',')[1];
+    const mimeType = azureImage.split(';')[0].slice(5);
+    let bytes = window.atob(data);
+    let buf = new ArrayBuffer(bytes.length);
+    let byteArr = new Uint8Array(buf);
 
+    for (const i = 0; i < bytes.length; i++) {
+        byteArr[i] = bytes.charCodeAt(i);
+    }
 
-    const AZURE_IMAGE = canvas.toDataURL();
+*/
     /*
     $.ajax({
         type: "POST",
@@ -102,6 +112,7 @@ function snap() {
     document.querySelector("#sourceImage").src = sourceImageUrl;
 
     // Perform the REST API call.
+
     $.ajax({
             url: uriBase + "?" + $.param(params),
 
@@ -114,7 +125,7 @@ function snap() {
             type: "POST",
 
             // Request body.
-            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+            data: /*'{"url": ' + '"' + */ sourceImageUrl /* + '"}'*/ ,
             success: getSong(),
         })
 
@@ -151,7 +162,6 @@ function snap() {
             alert(errorString);
         });
 };
-
 
 //        Y O U T U B E       A P I
 function getSong() {
