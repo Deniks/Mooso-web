@@ -108,8 +108,7 @@ function snap() {
         "returnFaceAttributes": "emotion"
     };
     // Display the image.
-    var sourceImageUrl = document.getElementById("inputImage").value = azureImage;
-    document.querySelector("#sourceImage").src = sourceImageUrl;
+  
 
     // Perform the REST API call.
     fetch(azureImage)
@@ -122,7 +121,9 @@ function snap() {
                         'Ocp-Apim-Subscription-Key': subscriptionKey,
                     },
                     processData: false,
-                    data: blobData
+                    data: blobData,
+                    success: console.log('recognized successfully'),
+                    
                 })
                 .done(data => {
                     // Show formatted JSON on webpage.
@@ -143,7 +144,7 @@ function snap() {
                     };
 
                     EMOTION_LOGGER();
-
+                    getSong()
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
                     // Display error message.
