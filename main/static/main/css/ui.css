@@ -1,19 +1,26 @@
+.settings {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: var(--windowWidth);
+}
+
+.row {
+    margin-bottom: 0;
+}
+
+.tabs {
+    background: none;
+}
+
+.tabs .tab a{
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 640px) {
-    .settings {
-        bottom: 0;
-        width: var(--windowWidth);
-    }
-    .row {
-        margin-bottom: 0;
-    }
-    .tabs {
-        background: none;
-    }
     .tabs .tab a {
         color: var(--secondaryColor);
         font-size: 10px;
-        
     }
     .material-icons {
         display: inline-flex;

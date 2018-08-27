@@ -106,7 +106,7 @@ function snap() {
         "returnFaceAttributes": "emotion"
     };
     // Display the image.
-  
+
 
     // Perform the REST API call.
     fetch(azureImage)
@@ -120,8 +120,8 @@ function snap() {
                     },
                     processData: false,
                     data: blobData,
-                    success: console.log('recognized successfully'),
-                    
+                    success: console.log('request is sent'),
+
                 })
                 .done(data => {
                     // Show formatted JSON on webpage.
@@ -155,8 +155,9 @@ function snap() {
                     alert(errorString);
                 });
         });
-    
+
 };
+let moodIdentificator = document.querySelector('.mood-identificator i');
 
 //        Y O U T U B E       A P I
 function getSong() {
@@ -164,16 +165,7 @@ function getSong() {
         part: 'snippet',
         key: CONFIG.key,
         maxResults: 20,
-        playlistId: 
-                window.Character === 'happiness' ? CONFIG.playlistLink.happiness :
-                window.Character === 'neutral' ? CONFIG.playlistLink.neutral : 
-                window.Character === 'sadness' ? CONFIG.playlistLink.sadness :
-                window.Character === 'disgust' ? CONFIG.playlistLink.disgust : 
-                window.Character === 'contempt' ? CONFIG.playlistLink.contempt : 
-                window.Character === 'fear' ? CONFIG.playlistLink.fear :
-                window.Character === 'surprise' ? CONFIG.playlistLink.surprise :
-                window.Character === 'angry' ? CONFIG.playlistLink.angry :
-                false,
+        playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happiness : window.Character === 'neutral' ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sadness : window.Character === 'disgust' ? CONFIG.playlistLink.disgust : window.Character === 'contempt' ? CONFIG.playlistLink.contempt : window.Character === 'fear' ? CONFIG.playlistLink.fear : window.Character === 'surprise' ? CONFIG.playlistLink.surprise : window.Character === 'angry' ? CONFIG.playlistLink.angry : false,
     }
 
     const mainVid = id => {
@@ -186,7 +178,7 @@ function getSong() {
 
         $.each(data.items, (i, item) => {
 
-            var thumb = item.snippet.thumbnails.small.url;
+            var thumb = item.snippet.thumbnails.medium.url;
             var title = item.snippet.title;
             var desc = item.snippet.description.substring(0, 100);
             var vid = item.snippet.resourceId.videoId;
@@ -225,5 +217,15 @@ function getSong() {
     const el = document.getElementById('youtube-api-result');
     const content = el.contentWindow.document.body.innerHTML;
     console.log(content);*/
+    switch (window.Character) {
+        case 'neutral':
+            moodIdentificator.innerHTML = 'sentiment_dissatisfied';
+            break;
+        case 'happiness':
+            moodIdentificator.innerHTML = 'mood';
+            break;
+        default:
+            'Sorry uncaught emotion';
+    }
 
 }
