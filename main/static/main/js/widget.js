@@ -6,9 +6,14 @@ const CONFIG = {
     // Y O U T U B E    A P I
     key: 'AIzaSyB_WOhnBx75TDgd-EmVztrnRprPti84TYQ',
     playlistLink: {
-        happiness: 'PL7DkqoXVLGXbILlf-zgaEWyRSz0FWrXyY',
-        sadness: 'PL7DkqoXVLGXZRoFkpIaFlDL_R0JgxqJsv',
-        neutral: 'PL7DkqoXVLGXZz2BB-hgR8JwEp0jOEFIYX',
+        surprise: 'PL5_r3TmE4rBrSJ35B1d5AX3npCyOkurrK',
+        happiness: 'PL5_r3TmE4rBox0OvAF89528cVJk-T707G',
+        fear: 'PL5_r3TmE4rBqmMwXbpe0j2M7YigI6JmES',
+        angry: 'PL5_r3TmE4rBowJ9YLYhzwuWPkkErRBU72',
+        contempt: 'PL5_r3TmE4rBoiKB4qHbirIkUELolT9kQS',
+        disgust: 'PL5_r3TmE4rBr3jMr08z_-BTH-UWZYYZwB',
+        sadness: 'PL5_r3TmE4rBrWDWsc3yG9lzXVCfxbJtwC',
+        neutral: 'PL5_r3TmE4rBpDIL0RlidLvr7tE93EF7Zu',
     },
     url: 'https://www.googleapis.com/youtube/v3/playlistItems',
     buildApiRequest: () => ('GET',
@@ -23,14 +28,7 @@ const CONFIG = {
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
-const URL_EXAMPLE = {
-    happiness: 'https://cdn.tinybuddha.com/wp-content/uploads/2009/10/Happy1.png',
-    neutral: 'https://cdn.vox-cdn.com/thumbor/VkpZk_WQSQvGe9T7YYOZscGsOwI=/0x86:706x557/1200x800/filters:focal(0x86:706x557)/cdn.vox-cdn.com/assets/738480/stevejobs.png',
-    sadness: 'https://cdn-img.health.com/sites/default/files/styles/large_16_9/public/styles/main/public/gettyimages-471914697.jpg?itok=2RvWMJYg',
-    selfie: canvas.value, // This will work only with running hosting
-};
-const PICTURES_FOR_AI = [];
-const EMOTIONS = ['smiling', 'calm', 'crying'];
+
 const EMOTION_CONTAINER = document.getElementsByClassName('emotions');
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
 
@@ -166,7 +164,16 @@ function getSong() {
         part: 'snippet',
         key: CONFIG.key,
         maxResults: 20,
-        playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happiness : window.Character === 'neutral' ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sadness : false,
+        playlistId: 
+                window.Character === 'happiness' ? CONFIG.playlistLink.happiness :
+                window.Character === 'neutral' ? CONFIG.playlistLink.neutral : 
+                window.Character === 'sadness' ? CONFIG.playlistLink.sadness :
+                window.Character === 'disgust' ? CONFIG.playlistLink.disgust : 
+                window.Character === 'contempt' ? CONFIG.playlistLink.contempt : 
+                window.Character === 'fear' ? CONFIG.playlistLink.fear :
+                window.Character === 'surprise' ? CONFIG.playlistLink.surprise :
+                window.Character === 'angry' ? CONFIG.playlistLink.angry :
+                false,
     }
 
     const mainVid = id => {
@@ -179,7 +186,7 @@ function getSong() {
 
         $.each(data.items, (i, item) => {
 
-            var thumb = item.snippet.thumbnails.medium.url;
+            var thumb = item.snippet.thumbnails.small.url;
             var title = item.snippet.title;
             var desc = item.snippet.description.substring(0, 100);
             var vid = item.snippet.resourceId.videoId;

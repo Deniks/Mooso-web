@@ -14,8 +14,6 @@ html {
 .window {
 	height: 100vh;
 	width: 100%;
-	overflow-y: hidden;
+	overflow-x: hidden;
 	background: var(--mainColor);
-	display: flex;
-	align-items: center;
 }
