@@ -3,11 +3,11 @@
 	grid-template-columns: repeat(5, 1fr);
 	grid-template-rows: repeat(3, 1fr);
 	grid-gap: minmax(200px, 1fr);
-	grid-template-areas: 
-			'. . . . .'
-			'. . m . .'
-			'. . c . .'
-			;
+	grid-template-areas:
+		'. . . . .'
+		'. . m . .'
+		'. . c . .'
+	;
 }
 
 .camera {
@@ -27,7 +27,12 @@
 }
 
 main {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
 	flex-direction: row;
 	padding: 10px;
 }
@@ -48,20 +53,22 @@ main {
 }
 
 #youtube-api-result iframe {
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
 /* 		MEDIA QUERIES			*/
-
 @media only screen and (max-width: 640px) {
 	html {
 		font-size: 13px;
 	}
+
 	.window {
 		overflow-y: visible;
 		overflow-x: hidden;
 		width: 100vw;
 	}
+
 	.widget {
 		height: calc(var(--windowHeight) - 8%);
 		position: absolute;
@@ -70,17 +77,24 @@ main {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(3, 1fr);
-		grid-template-areas: '. . .' '. m .' 'c c c';
+		grid-template-areas: '. . .''. m .''c c c';
 	}
+
 	main {
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
 		flex-direction: column;
 	}
+
 	#youtube-playlist {
 		display: none;
 	}
+
 	.controls {
 		text-align: center;
 	}
+
 	.emotions {
 		display: none;
 	}

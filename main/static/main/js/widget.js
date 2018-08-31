@@ -51,7 +51,11 @@ function streamWebCam(stream) {
 function throwError(e) {
     alert(e.name);
 }
-
+function tooltipContent(value) {
+    let tooltip = $('.tooltipped');
+    tooltip.attr('data-tooltip', value);
+    tooltip.tooltip();
+}
 function snap() {
 
     let errorHandler = document.querySelector('.error_handler i');
@@ -60,6 +64,7 @@ function snap() {
     context.drawImage(video, 0, 0);
     const FORMAT = 'png';
     let azureImage = canvas.toDataURL('image/' + FORMAT);
+
     /*
     let data = azureImage.split(',')[1];
     const mimeType = azureImage.split(';')[0].slice(5);
@@ -147,10 +152,12 @@ function snap() {
                         errorHandler.innerHTML = 'check_circle';
                         errorHandler.classList.remove('red-text');
                         errorHandler.classList.add('teal-text');
+                        tooltipContent('successfully recognized');
                     } catch (err) {
                         errorHandler.classList.remove('teal-text');
                         errorHandler.classList.add('red-text');
                         errorHandler.innerHTML = 'error_outline';
+                        tooltipContent('no face detected');
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {

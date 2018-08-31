@@ -1,8 +1,3 @@
-function on() {
-    $('.widget').muted = true;
-    console.log('audio - muted');
-};
-
 // FULLSCREEN MODE
 function toggleFullScreen(el) {
     if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
@@ -41,6 +36,6 @@ function moodToast() {
     })
 }
 $(document).ready(function () {
-    $('.tooltipped').tooltip();
-    $('.tooltipped').getAttributes('data-tooltip') = 'heyy';
+
+
 });

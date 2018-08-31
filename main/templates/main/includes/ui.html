@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="state-identificator">
-    <a class="error_handler tooltipped" data-position="left">
+    <a class="error_handler tooltipped" data-position="left" data-tooltip="status: ">
         <i class="
         material-icons">
         </i>
@@ -16,42 +16,28 @@
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s3 m2 l1">
+                <li class="tab col s3 m2 l4">
                     <a href="/">
                         <i class="material-icons">
                             home
                         </i>
                     </a>
                 </li>
-                <li class="tab col s3 m2 l1">
-                    <a onclick="viewPage();">
-                        <i class="material-icons">
-                            fullscreen
-                        </i>
-                    </a>
-                </li>
-                <li class="tab col s3 m2 l1">
+                <li class="tab col s3 m2 l4">
                     <a onclick="moodToast();" class="mood-identificator">
                         <i class="material-icons black-text">
                             face
                         </i>
                     </a>
                 </li>
-                <li class="tab col s3 m2 l1" id="sound" onclick="on();">
-                    <a href="#test3">
+                <li class="tab col s3 m2 l4">
+                    <a onclick="viewPage();">
                         <i class="material-icons">
-                            music_note
+                            fullscreen
                         </i>
                     </a>
                 </li>
 
-                <li class="tab col s3 m2 l1">
-                    <a href="#test4">
-                        <i class="material-icons">
-                            exit_to_app
-                        </i>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
