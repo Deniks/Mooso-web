@@ -11,21 +11,36 @@
 
 .tabs {
     background: none;
+    
 }
 
-.tabs .tab a{
+.tabs .tab a {
     cursor: pointer;
 }
+
 .state-identificator {
     position: absolute;
     right: 0;
     top: 0;
 }
+
+.toast-pos {
+    background: var(--thirdColor);
+}
+
+#toast-container {
+    top: calc(var(--windowHeight) - 97%);
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+}
+
 @media only screen and (max-width: 640px) {
     .tabs .tab a {
         color: var(--secondaryColor);
         font-size: 10px;
     }
+
     .material-icons {
         display: inline-flex;
         vertical-align: top;

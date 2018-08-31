@@ -54,7 +54,7 @@ function throwError(e) {
 
 function snap() {
 
-
+    let errorHandler = document.querySelector('.error_handler i');
     canvas.width = video.clientWidth;
     canvas.height = video.clientHeight;
     context.drawImage(video, 0, 0);
@@ -125,6 +125,7 @@ function snap() {
                 })
                 .done(data => {
                     try {
+
                         // Show formatted JSON on webpage.
                         $("#responseTextArea").val(JSON.stringify(data, null, 2));
                         let domText = JSON.parse(document.getElementById('responseTextArea').value);
@@ -141,14 +142,15 @@ function snap() {
                                 }
                             }
                         };
-
                         EMOTION_LOGGER();
                         getSong()
+                        errorHandler.innerHTML = 'check_circle';
+                        errorHandler.classList.remove('red-text');
+                        errorHandler.classList.add('teal-text');
                     } catch (err) {
-                        let errorHandler = document.querySelector('.error_handler i');
+                        errorHandler.classList.remove('teal-text');
+                        errorHandler.classList.add('red-text');
                         errorHandler.innerHTML = 'error_outline';
-                        console.log(errorHandler.innerHTML);
-                        
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {

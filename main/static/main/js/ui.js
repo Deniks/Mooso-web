@@ -1,4 +1,4 @@
-function on(){
+function on() {
     $('.widget').muted = true;
     console.log('audio - muted');
 };
@@ -27,6 +27,7 @@ function toggleFullScreen(el) {
         }
     }
 }
+
 function viewPage() {
     var el = document.body;
     toggleFullScreen(el);
@@ -34,5 +35,12 @@ function viewPage() {
 
 function moodToast() {
     const MOOD = window.Character ? window.Character : 'none';
-    M.toast({html: `Mood : ${MOOD}`})
+    M.toast({
+        html: `Mood : ${MOOD}`,
+        classes: 'toast-pos'
+    })
 }
+$(document).ready(function () {
+    $('.tooltipped').tooltip();
+    $('.tooltipped').getAttributes('data-tooltip') = 'heyy';
+});
