@@ -2,10 +2,11 @@
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	grid-template-rows: repeat(3, 1fr);
+	grid-gap: minmax(200px, 1fr);
 	grid-template-areas: 
-			'. m m m .'
-			'. e e e .'
-			'. c c c .'
+			'. . . . .'
+			'. . m . .'
+			'. . c . .'
 			;
 }
 
@@ -66,11 +67,10 @@ main {
 		position: absolute;
 		top: 0;
 		width: var(--windowWidth);
-		background-color: rgb(5, 71, 71);
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(3, 1fr);
-		grid-template-areas: 'm m m' 'a a a' 'c c c';
+		grid-template-areas: '. . .' '. m .' 'c c c';
 	}
 	main {
 		flex-direction: column;

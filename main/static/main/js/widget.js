@@ -124,25 +124,32 @@ function snap() {
 
                 })
                 .done(data => {
-                    // Show formatted JSON on webpage.
-                    $("#responseTextArea").val(JSON.stringify(data, null, 2));
-                    let domText = JSON.parse(document.getElementById('responseTextArea').value);
-                    let emotions = domText[0].faceAttributes.emotion;
-                    console.log(emotions);
-                    window.Character = '';
+                    try {
+                        // Show formatted JSON on webpage.
+                        $("#responseTextArea").val(JSON.stringify(data, null, 2));
+                        let domText = JSON.parse(document.getElementById('responseTextArea').value);
+                        let emotions = domText[0].faceAttributes.emotion;
+                        console.log(emotions);
+                        window.Character = '';
 
-                    window.EMOTION_LOGGER = () => {
-                        for (const [key, value] of Object.entries(emotions)) {
-                            const VALUE = Math.round(value);
-                            if (VALUE === 1) {
-                                Character = key;
-                                console.log(`${key}`);
+                        window.EMOTION_LOGGER = () => {
+                            for (const [key, value] of Object.entries(emotions)) {
+                                const VALUE = Math.round(value);
+                                if (VALUE === 1) {
+                                    Character = key;
+                                    console.log(`${key}`);
+                                }
                             }
-                        }
-                    };
+                        };
 
-                    EMOTION_LOGGER();
-                    getSong()
+                        EMOTION_LOGGER();
+                        getSong()
+                    } catch (err) {
+                        let errorHandler = document.querySelector('.error_handler i');
+                        errorHandler.innerHTML = 'error_outline';
+                        console.log(errorHandler.innerHTML);
+                        
+                    }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
                     // Display error message.
@@ -155,7 +162,6 @@ function snap() {
                     alert(errorString);
                 });
         });
-    console.log('woork');
 
 };
 let moodIdentificator = document.querySelector('.mood-identificator i');
@@ -165,7 +171,7 @@ function getSong() {
     const options = {
         part: 'snippet',
         key: CONFIG.key,
-        maxResults: null,
+        maxResults: 20,
         playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happiness : window.Character === 'neutral' ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sadness : window.Character === 'disgust' ? CONFIG.playlistLink.disgust : window.Character === 'contempt' ? CONFIG.playlistLink.contempt : window.Character === 'fear' ? CONFIG.playlistLink.fear : window.Character === 'surprise' ? CONFIG.playlistLink.surprise : window.Character === 'anger' ? CONFIG.playlistLink.anger : false,
     }
 
@@ -206,7 +212,14 @@ function getSong() {
         });
     }
 
-    loadVids();
+    while (true) {
+        if (loadVids()) {
+            console.log('loaded');
+        } else {
+            console.log('loading')
+            break;
+        }
+    }
 
     $('main').on('click', 'article', () => {
         const id = $(this).attr('data-key');

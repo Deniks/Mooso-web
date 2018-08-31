@@ -32,3 +32,7 @@ function viewPage() {
     toggleFullScreen(el);
 };
 
+function moodToast() {
+    const MOOD = window.Character ? window.Character : 'none';
+    M.toast({html: `Mood : ${MOOD}`})
+}
