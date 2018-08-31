@@ -1,10 +1,10 @@
 .widget {
+	z-index: 1;
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(3, 1fr);
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
 	grid-template-areas: 
 			'. m m m .'
-			'. e e e .'
 			'. c c c .'
 			;
 }
@@ -74,9 +74,6 @@ main {
 	}
 	main {
 		flex-direction: column;
-	}
-	#youtube-playlist {
-		display: none;
 	}
 	.controls {
 		text-align: center;

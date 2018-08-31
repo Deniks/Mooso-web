@@ -8,36 +8,30 @@
 <div class="settings">
     <div class="row">
         <div class="col s12">
-            <ul class="tabs">
-                <li class="tab col s3 m2 l1">
+            <ul class="tabs flexbox">
+                <li class="tab col s2 m2 l1">
                     <a href="/">
                         <i class="material-icons">
                             home
                         </i>
                     </a>
                 </li>
-                <li class="tab col s3 m2 l1">
+                <li class="tab col s2 m2 l1">
                     <a onclick="viewPage();">
                         <i class="material-icons">
                             fullscreen
                         </i>
                     </a>
                 </li>
-                <li class="tab col s3 m2 l1">
+                <li class="tab col s2 m2 l1">
                     <a class="mood-identificator">
                         <i class="material-icons black-text">
-                        </i>
-                    </a>
-                </li>
-                <li class="tab col s3 m2 l1" id="sound" onclick="on();">
-                    <a href="#test3">
-                        <i class="material-icons">
-                            music_note
+                            face
                         </i>
                     </a>
                 </li>
 
-                <li class="tab col s3 m2 l1">
+                <li class="tab col s2 m2 l1">
                     <a href="#test4">
                         <i class="material-icons">
                             exit_to_app
@@ -48,7 +42,24 @@
         </div>
     </div>
 
-
+    <script>
+        let emoji = {
+            anger: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 24 30" enable-background="new 0 0 24 24" xml:space="preserve"><path d="M12,2C6.5,2,2,6.5,2,12c0,5.5,4.5,10,10,10c5.5,0,10-4.5,10-10C22,6.5,17.5,2,12,2z M7.5,10C6.7,10,6,9.3,6,8.5  C6,7.7,6.7,7,7.5,7S9,7.7,9,8.5C9,9.3,8.3,10,7.5,10z M12,19c-1.7,0-3-1.3-3-3s1.3-3,3-3c1.7,0,3,1.3,3,3S13.7,19,12,19z M16.5,10  C15.7,10,15,9.3,15,8.5C15,7.7,15.7,7,16.5,7C17.3,7,18,7.7,18,8.5C18,9.3,17.3,10,16.5,10z"/><text x="0" y="39" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Creative Stall</text><text x="0" y="44" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text></svg>`
+        }
+        const parseSvg = (svg, format) => {
+            const doc = new DOMParser().parseFromString(svg, format);
+            return doc;
+        }
+        for (let key in emoji) {
+            parseSvg(emoji[key], 'application/xml');
+        }
+        let anger = document.getElementsByClassName('anger');
+        let svgIcons = document.querySelector('.svg-icons');
+        if (anger.length) {
+            console.log('anger');
+            anger.innerHTML = 'emoji.anger';
+        }
+    </script>
 </div>
 
 {% endblock %}

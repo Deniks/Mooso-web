@@ -3,17 +3,25 @@
     bottom: 0;
     left: 0;
     width: var(--windowWidth);
+    z-index: 0;
 }
 
 .row {
     margin-bottom: 0;
 }
 
-.tabs {
-    background: none;
+.flexbox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
-.tabs .tab a{
+.tabs {
+    background: var(--mainColor);
+}
+
+.tabs .tab a {
     cursor: pointer;
 }
 
@@ -22,6 +30,7 @@
         color: var(--secondaryColor);
         font-size: 10px;
     }
+
     .material-icons {
         display: inline-flex;
         vertical-align: top;
