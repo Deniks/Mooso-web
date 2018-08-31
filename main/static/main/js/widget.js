@@ -9,7 +9,7 @@ const CONFIG = {
         surprise: 'PL5_r3TmE4rBrSJ35B1d5AX3npCyOkurrK',
         happiness: 'PL5_r3TmE4rBox0OvAF89528cVJk-T707G',
         fear: 'PL5_r3TmE4rBqmMwXbpe0j2M7YigI6JmES',
-        angry: 'PL5_r3TmE4rBowJ9YLYhzwuWPkkErRBU72',
+        angrer: 'PL5_r3TmE4rBowJ9YLYhzwuWPkkErRBU72',
         contempt: 'PL5_r3TmE4rBoiKB4qHbirIkUELolT9kQS',
         disgust: 'PL5_r3TmE4rBr3jMr08z_-BTH-UWZYYZwB',
         sadness: 'PL5_r3TmE4rBrWDWsc3yG9lzXVCfxbJtwC',
@@ -155,6 +155,7 @@ function snap() {
                     alert(errorString);
                 });
         });
+    console.log('woork');
 
 };
 let moodIdentificator = document.querySelector('.mood-identificator i');
@@ -164,8 +165,8 @@ function getSong() {
     const options = {
         part: 'snippet',
         key: CONFIG.key,
-        maxResults: 20,
-        playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happiness : window.Character === 'neutral' ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sadness : window.Character === 'disgust' ? CONFIG.playlistLink.disgust : window.Character === 'contempt' ? CONFIG.playlistLink.contempt : window.Character === 'fear' ? CONFIG.playlistLink.fear : window.Character === 'surprise' ? CONFIG.playlistLink.surprise : window.Character === 'angry' ? CONFIG.playlistLink.angry : false,
+        maxResults: null,
+        playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happiness : window.Character === 'neutral' ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sadness : window.Character === 'disgust' ? CONFIG.playlistLink.disgust : window.Character === 'contempt' ? CONFIG.playlistLink.contempt : window.Character === 'fear' ? CONFIG.playlistLink.fear : window.Character === 'surprise' ? CONFIG.playlistLink.surprise : window.Character === 'anger' ? CONFIG.playlistLink.anger : false,
     }
 
     const mainVid = id => {
@@ -186,13 +187,11 @@ function getSong() {
 
             $('#youtube-playlist').append(`
                 <article class="item" data-key="${vid}">
-
                     <img src="${thumb}" alt="" class="thumb">
                     <div class="details">
                         <h4>${title}</h4>
                         <p>${desc}</p>
                     </div>
-
                 </article>
             `);
         });
@@ -223,6 +222,12 @@ function getSong() {
             break;
         case 'happiness':
             moodIdentificator.innerHTML = 'mood';
+            break;
+        case 'sadness':
+            moodIdentificator.innerHTML = 'sentiment_very_dissatisfied';
+            break;
+        case 'anger':
+            moodIdentificator.innerHTML = 'whatshot';
             break;
         default:
             'Sorry uncaught emotion';
