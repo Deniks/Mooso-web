@@ -15,12 +15,7 @@ const CONFIG = {
         sadness: 'PL5_r3TmE4rBrWDWsc3yG9lzXVCfxbJtwC',
         neutral: 'PL5_r3TmE4rBpDIL0RlidLvr7tE93EF7Zu',
     },
-    url: 'https://www.googleapis.com/youtube/v3/playlistItems',
-    buildApiRequest: () => ('GET',
-        '/youtube/v3/channels', {
-            'id': 'UC_KuDw9D6IF_UNAmXiwHSuQ',
-            'part': 'snippet,contentDetails,statistics'
-        }),
+    api_url: 'https://www.googleapis.com/youtube/v3/playlistItems',
 }
 
 
@@ -44,7 +39,7 @@ const getNestedObject = (nestedObj, pathArr) => {
 }
 
 function streamWebCam(stream) {
-    video.src = window.URL.createObjectURL(stream);
+    video.srcObject = stream;
     video.play();
 }
 
@@ -60,53 +55,13 @@ function snap() {
     context.drawImage(video, 0, 0);
     const FORMAT = 'png';
     let azureImage = canvas.toDataURL('image/' + FORMAT);
-    /*
-    let data = azureImage.split(',')[1];
-    const mimeType = azureImage.split(';')[0].slice(5);
-    let bytes = window.atob(data);
-    let buf = new ArrayBuffer(bytes.length);
-    let byteArr = new Uint8Array(buf);
-
-    for (const i = 0; i < bytes.length; i++) {
-        byteArr[i] = bytes.charCodeAt(i);
-    }
-
-*/
-    /*
-    $.ajax({
-        type: "POST",
-        url: "script.php",
-        data: { 
-           imgBase64: AZURE_IMAGE
-        }
-      }).done(function(o) {
-        console.log('saved'); 
-        // If you want the file to be visible in the browser 
-        // - please modify the callback in javascript. All you
-        // need is to return the url to the file, you just saved 
-        // and than put the image in your browser.
-      });*/
-    // Replace <Subscription Key> with your valid subscription key.
-    var subscriptionKey = CONFIG.azureSubscribtionKey;
-
-    // NOTE: You must use the same region in your REST call as you used to
-    // obtain your subscription keys. For example, if you obtained your
-    // subscription keys from westus, replace "westcentraluss" in the URL
-    // below with "westus".
-    //
-    // Free trial subscription keys are generated in the westcentralus region.
-    // If you use a free trial subscription key, you shouldn't need to change 
-    // this region.
-    var uriBase = CONFIG.azureServerLocation;
-
-    // Request parameters.
-    var params = {
+    const subscriptionKey = CONFIG.azureSubscribtionKey;
+    const uriBase = CONFIG.azureServerLocation;
+    const params = {
         "returnFaceId": "false",
         "returnFaceLandmarks": "false",
         "returnFaceAttributes": "emotion"
     };
-    // Display the image.
-
 
     // Perform the REST API call.
     fetch(azureImage)
@@ -127,8 +82,9 @@ function snap() {
                     // Show formatted JSON on webpage.
                     $("#responseTextArea").val(JSON.stringify(data, null, 2));
                     let domText = JSON.parse(document.getElementById('responseTextArea').value);
+                    console.log(domText);
+
                     let emotions = domText[0].faceAttributes.emotion;
-                    console.log(emotions);
                     window.Character = '';
 
                     window.EMOTION_LOGGER = () => {
@@ -164,7 +120,7 @@ function getSong() {
     const options = {
         part: 'snippet',
         key: CONFIG.key,
-        maxResults: null,
+        maxResults: 50,
         playlistId: window.Character === 'happiness' ? CONFIG.playlistLink.happiness : window.Character === 'neutral' ? CONFIG.playlistLink.neutral : window.Character === 'sadness' ? CONFIG.playlistLink.sadness : window.Character === 'disgust' ? CONFIG.playlistLink.disgust : window.Character === 'contempt' ? CONFIG.playlistLink.contempt : window.Character === 'fear' ? CONFIG.playlistLink.fear : window.Character === 'surprise' ? CONFIG.playlistLink.surprise : window.Character === 'anger' ? CONFIG.playlistLink.anger : false,
     }
 
@@ -174,21 +130,14 @@ function getSong() {
         `);
     }
 
-    const resultsLoop = data => {
 
-       
-    }
-
-    const loadVids = () => {
-        $.getJSON(CONFIG.url, options, data => {
-            const WHOLE_PLAYLIST = data.items
-            const id = data.items[Math.floor(Math.random() * WHOLE_PLAYLIST.length)].snippet.resourceId.videoId;
-            mainVid(id);
-            resultsLoop(data);
-        });
-    }
-
-    loadVids();
+    $.getJSON(CONFIG.api_url, options, data => {
+        const WHOLE_PLAYLIST = data.items
+        const id = data.items[Math.floor(Math.random() * WHOLE_PLAYLIST.length)].snippet.resourceId.videoId;
+        mainVid(id);
+    })
+    .then(res => console.log('response: ', res))
+    .catch(err => console.log('caught ', err.responseJSON))
 
     $('main').on('click', 'article', () => {
         const id = $(this).attr('data-key');
@@ -198,6 +147,7 @@ function getSong() {
     const el = document.getElementById('youtube-api-result');
     const content = el.contentWindow.document.body.innerHTML;
     console.log(content);*/
+
     switch (window.Character) {
         case 'neutral':
             moodIdentificator.innerHTML = 'sentiment_dissatisfied';

@@ -32,3 +32,11 @@ function viewPage() {
     toggleFullScreen(el);
 };
 
+function getHome() {
+    alert('No home page!');
+}
+
+async function moodAsyncIdentificator() {
+    let text = await window.Character;
+    return M.toast({html: text})
+}

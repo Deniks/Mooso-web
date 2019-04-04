@@ -1,18 +1,18 @@
 .widget {
 	z-index: 1;
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: repeat(2, 1fr);
-	grid-template-areas: 
-			'. m m m .'
-			'. c c c .'
-			;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	grid-template-areas: '. . .' 'm m m' 'a a a' '. c .';
 }
 
 .camera {
 	grid-area: c;
 }
-
+.camera .controls {
+	margin: 0 auto;
+	text-align: center;
+}
 .emotions {
 	grid-area: e;
 }
@@ -49,6 +49,12 @@ main {
 #youtube-api-result iframe {
 	box-sizing: border-box;
 }
+.music {
+	position: relative;
+	width: 100vw;
+	margin: 0 auto;
+	text-align: center;
+}
 
 /* 		MEDIA QUERIES			*/
 
@@ -69,8 +75,8 @@ main {
 		background-color: rgb(5, 71, 71);
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: repeat(3, 1fr);
-		grid-template-areas: 'm m m' 'a a a' 'c c c';
+		grid-template-rows: repeat(4, 1fr);
+		grid-template-areas: '. . .' 'm m m' 'a a a' 'c c c';
 	}
 	main {
 		flex-direction: column;
